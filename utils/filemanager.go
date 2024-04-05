@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"os"
+	"time"
 )
 
 type FileManager struct {
@@ -39,6 +40,10 @@ func (fm FileManager) WriteJSON(data interface{}) error {
 	if err != nil {
 		return errors.New("Failed to create the file!")
 	}
+
+	// Simulate slow running process for goroutine example
+	time.Sleep(2 * time.Second)
+
 	encoder := json.NewEncoder(file)
 	err = encoder.Encode(data)
 	if err != nil {
