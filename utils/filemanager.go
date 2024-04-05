@@ -20,6 +20,8 @@ func (fm FileManager) ReadLines() ([]string, error) {
 		return nil, errors.New("Failed to open the file!")
 	}
 
+	defer file.Close()
+
 	scanner := bufio.NewScanner(file)
 
 	var lines []string
@@ -41,16 +43,20 @@ func (fm FileManager) WriteJSON(data interface{}) error {
 		return errors.New("Failed to create the file!")
 	}
 
+	defer file.Close()
+
 	// Simulate slow running process for goroutine example
 	time.Sleep(2 * time.Second)
 
 	encoder := json.NewEncoder(file)
 	err = encoder.Encode(data)
 	if err != nil {
-		file.Close()
+		// Simulate 'defer' method
+		// file.Close()
 		return errors.New("Failed to convert the data to JSON!")
 	}
-	file.Close()
+	// Simulate 'defer' method
+	// file.Close()
 	return nil
 }
 
